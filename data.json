@@ -151,6 +151,10 @@
     {
       "repo": "rogerrum/k8s-gitops",
       "description": "ArgoCD managed k3s home cluster"
+    },
+    {
+      "repo": "samip5/k8s-cluster",
+      "description": "Flux/GitOps managed full-stack multi-architecture Kubernetes cluster"
     }
   ],
   "chart_repositories": [
