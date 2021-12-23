@@ -6,7 +6,7 @@ A curation of projects and resources involving running Kubernetes at home. ⛵
   - [Home GitOps Kubernetes Clusters](#home-gitops-kubernetes-clusters)
   - [Helm Chart Repositories](#helm-chart-repositories)
 
-## Home GitOps Kubernetes Clusters
+## Home GitOps Kubernetes Clusters (all)
 
 [![search-users](https://img.shields.io/badge/search-repos-orange?style=for-the-badge)]({{ user_repo_search_url }})
 [![search-users](https://img.shields.io/badge/search-users-orange?style=for-the-badge)]({{ user_search_url }})
@@ -16,6 +16,30 @@ A curation of projects and resources involving running Kubernetes at home. ⛵
 {%- for repository in user_repositories %}
 | [{{ repository['repo'] }}]({{ repository['url'] }})             | {{ repository['description'] }}        |
 {%- endfor %}
+
+## Home GitOps Kubernetes Clusters (Flux)
+
+[![search-users](https://img.shields.io/badge/search-repos-orange?style=for-the-badge)]({{ user_repo_search_url_flux }})
+[![search-users](https://img.shields.io/badge/search-users-orange?style=for-the-badge)]({{ user_search_url_flux }})
+
+| Repository                                                      | Description                            |
+| --------------------------------------------------------------- | -------------------------------------- |
+{%- for repository in user_repositories_flux %}
+| [{{ repository['repo'] }}]({{ repository['url'] }})             | {{ repository['description'] }}        |
+{%- endfor %}
+
+## Home GitOps Kubernetes Clusters (Argo)
+
+[![search-users](https://img.shields.io/badge/search-repos-orange?style=for-the-badge)]({{ user_repo_search_url_argo }})
+[![search-users](https://img.shields.io/badge/search-users-orange?style=for-the-badge)]({{ user_search_url_argo }})
+
+| Repository                                                      | Description                            |
+| --------------------------------------------------------------- | -------------------------------------- |
+{%- for repository in user_repositories_argo %}
+| [{{ repository['repo'] }}]({{ repository['url'] }})             | {{ repository['description'] }}        |
+{%- endfor %}
+
+
 
 ## Helm Chart Repositories
 

@@ -27,11 +27,29 @@ if not os.path.isfile(TEMPLATE_PATH):
 
 def massage_data():
     # Sort repositories
-    json_data['user_repositories'] = sorted(json_data['user_repositories'], key=lambda d: d['repo'].lower())
+    json_data['user_repositories'][0]['argo'] = sorted(json_data['user_repositories'][0]['argo'],
+                                                       key=lambda d: d['repo']
+                                                       .lower())
+    json_data['user_repositories'][0]['flux'] = sorted(json_data['user_repositories'][0]['flux'],
+                                                       key=lambda d: d['repo']
+                                                       .lower())
+    json_data['user_repositories'][0]['other'] = sorted(json_data['user_repositories'][0]['other'],
+                                                        key=lambda d: d['repo']
+                                                        .lower())
+    json_data['user_repositories'][0]['all'] = []
+    json_data['user_repositories'][0]['all'] = json_data['user_repositories'][0]['argo'] + \
+                                        json_data['user_repositories'][0]['flux'] + \
+                                        json_data['user_repositories'][0]['other']
     json_data['chart_repositories'] = sorted(json_data['chart_repositories'], key=lambda d: d['repo'].lower())
 
     # Add Github URL if no URL attribute is set
-    for user_repo in json_data['user_repositories']:
+    for user_repo in json_data['user_repositories'][0]['argo']:
+        if not 'url' in user_repo or not user_repo['url']:
+            user_repo['url'] = f"https://github.com/{user_repo['repo']}"
+    for user_repo in json_data['user_repositories'][0]['flux']:
+        if not 'url' in user_repo or not user_repo['url']:
+            user_repo['url'] = f"https://github.com/{user_repo['repo']}"
+    for user_repo in json_data['user_repositories'][0]['other']:
         if not 'url' in user_repo or not user_repo['url']:
             user_repo['url'] = f"https://github.com/{user_repo['repo']}"
 
@@ -71,11 +89,17 @@ def render_readme_template():
     env = jinja2.Environment(loader=jinja2.FileSystemLoader(searchpath=TEMPLATE_FOLDER))
     template = env.get_template(TEMPLATE_FILE)
     output = template.render(
-        user_repo_search_url=build_sourcegraph_repo_search_url(json_data['user_repositories']),
-        user_search_url=build_sourcegraph_user_search_url(json_data['user_repositories']),
+        user_repo_search_url=build_sourcegraph_repo_search_url(json_data['user_repositories'][0]['all']),
+        user_repo_search_url_flux=build_sourcegraph_repo_search_url(json_data['user_repositories'][0]['flux']),
+        user_repo_search_url_argo=build_sourcegraph_repo_search_url(json_data['user_repositories'][0]['argo']),
+        user_search_url=build_sourcegraph_user_search_url(json_data['user_repositories'][0]['all']),
+        user_search_url_flux=build_sourcegraph_user_search_url(json_data['user_repositories'][0]['flux']),
+        user_search_url_argo=build_sourcegraph_user_search_url(json_data['user_repositories'][0]['argo']),
         chart_repo_search_url=build_sourcegraph_repo_search_url(json_data['chart_repositories']),
         chart_user_search_url=build_sourcegraph_user_search_url(json_data['chart_repositories']),
-        user_repositories=json_data['user_repositories'],
+        user_repositories=json_data['user_repositories'][0]['all'],
+        user_repositories_flux=json_data['user_repositories'][0]['flux'],
+        user_repositories_argo=json_data['user_repositories'][0]['argo'],
         chart_repositories=json_data['chart_repositories']
     )
     return output
